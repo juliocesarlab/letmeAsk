@@ -1,15 +1,15 @@
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
-import { Button } from "../components/Button";
+import { Button } from "../../components/Button/Button";
 
-import { database } from "../services/firebase";
+import { database } from "../../services/firebase";
 
-import illustrationImg from "../assets/illustration.svg";
-import logoImg from "../assets/logo.svg";
-import googleIconImage from "../assets/google-icon.svg";
+import illustrationImg from "../../assets/illustration.svg";
+import logoImg from "../../assets/logo.svg";
+import googleIconImage from "../../assets/google-icon.svg";
 
-import "../styles/auth.scss";
+import { PageAuth } from "./style";
 import { FormEvent } from "react";
 import { useState } from "react";
 
@@ -47,7 +47,7 @@ export const Home = () => {
   };
 
   return (
-    <div id="page-auth">
+    <PageAuth >
       <aside>
         <img src={illustrationImg} alt="illustrationImg" />
         <strong>Crie salas de Q&amp;A ao vivo</strong>
@@ -77,6 +77,6 @@ export const Home = () => {
           </form>
         </div>
       </main>
-    </div>
+    </PageAuth>
   );
 };

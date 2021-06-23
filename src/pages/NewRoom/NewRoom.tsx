@@ -3,16 +3,17 @@ import { FormEvent } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
-import { database } from "../services/firebase";
+import { database } from "../../services/firebase";
 
-import { Button } from "../components/Button";
+import { Button } from "../../components/Button/Button";
 
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
-import illustrationImg from "../assets/illustration.svg";
-import logoImg from "../assets/logo.svg";
-import "../styles/auth.scss";
+import illustrationImg from "../../assets/illustration.svg";
+import logoImg from "../../assets/logo.svg";
+
+import { RoomStyle } from './style'
 
 
 
@@ -40,7 +41,7 @@ export const NewRoom = () => {
   }
 
   return (
-    <div id="page-auth">
+    <RoomStyle >
       <aside>
         <img src={illustrationImg} alt="illustrationImg" />
         <strong>Crie salas de Q&amp;A ao vivo</strong>
@@ -67,6 +68,6 @@ export const NewRoom = () => {
           </p>
         </div>
       </main>
-    </div>
+    </RoomStyle>
   );
 };
