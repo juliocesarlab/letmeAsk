@@ -97,5 +97,7 @@ export const StyledRoom = styled.div`
         }
       }
     }
+
+    
   }
 `;
