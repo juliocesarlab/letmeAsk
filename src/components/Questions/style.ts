@@ -37,5 +37,29 @@ export const StyledQuestion = styled.div`
         font-size: 14px;
       }
     }
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+
+      &:hover{
+        filter: brightness(0.8)
+      }
+
+      &.like-button {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+      }
+      
+
+      &.liked{
+        color: #835afd;
+
+        svg path{
+          stroke: #835afd
+        }
+      }
+    }
   }
 `;

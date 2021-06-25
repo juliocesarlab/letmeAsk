@@ -13,6 +13,7 @@ import { Question } from "../../components/Questions/Question";
 import { database } from "../../services/firebase";
 
 import logoImg from "../../assets/logo.svg";
+import deleteImg from "../../assets/delete.svg"
 import { UseRoom } from "../../hooks/UseRoom";
 
 type RoomParams = {
@@ -26,6 +27,15 @@ export const AdminRoom = () => {
   const roomId = params.id;
 
   const { questions, title } = UseRoom(roomId);
+
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (window.confirm("Você tem certeza que deseja excluir essa pergunta ?")){
+      const questionRef = await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
+    } else {
+      return;
+    }
+  }
 
   const handleSendQuestion = async (e: FormEvent) => {
     e.preventDefault();
@@ -77,7 +87,15 @@ export const AdminRoom = () => {
               key={question.id}
               content={question.content}
               author={question.author}
-            />
+            >
+              <button
+              type="button"
+              onClick={() => handleDeleteQuestion(question.id)}
+              >
+                <img src={deleteImg} alt="exluir pergunta" />
+              </button>
+
+            </Question>
           );
         })}
       </main>

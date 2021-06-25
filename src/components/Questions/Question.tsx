@@ -1,4 +1,5 @@
 import { StyledQuestion } from './style'
+import { ReactNode } from 'react'
 
 type QuestionProps = {
   content: string,
@@ -6,11 +7,13 @@ type QuestionProps = {
     name: string;
     avatar: string
   }
+  children?: ReactNode;
 }
 
 export const Question = ({
   content,
-  author
+  author,
+  children
 }: QuestionProps) => {
   
   return(
@@ -21,7 +24,7 @@ export const Question = ({
           <img src={author.avatar} alt={author.name} />
           <span>{author.name}</span>
         </div>
-        <div></div>
+        <div>{children}</div>
       </footer>
     </StyledQuestion>
   )
