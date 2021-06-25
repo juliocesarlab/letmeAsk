@@ -106,5 +106,9 @@ export const StyledRoomAdmin = styled.div`
         }
       }
     }
+    .buttons {
+      display: flex;
+      gap: 16px;
+    }
   }
 `;

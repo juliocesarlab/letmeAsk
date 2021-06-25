@@ -7,6 +7,19 @@ export const StyledQuestion = styled.div`
   padding: 24px;
   margin-top: 40px;
 
+  &.answered {
+    background: #dbdbdb;
+  }
+
+  &.highlighted {
+    background: #f4f0ff;
+    border: 1px solid #835afd;
+
+    footer .user-info span{
+      color: #29292e;
+    }
+  }
+
   & + & {
     margin-top: 8px;
   }

@@ -1,23 +1,29 @@
-import { StyledQuestion } from './style'
-import { ReactNode } from 'react'
+import { StyledQuestion } from "./style";
+import { ReactNode } from "react";
 
 type QuestionProps = {
-  content: string,
+  content: string;
   author: {
     name: string;
-    avatar: string
-  }
+    avatar: string;
+  };
   children?: ReactNode;
-}
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
+};
 
 export const Question = ({
   content,
   author,
-  children
+  children,
+  isAnswered = false,
+  isHighlighted = false,
 }: QuestionProps) => {
-  
-  return(
-    <StyledQuestion>
+  return (
+    <StyledQuestion
+      className={`${isAnswered ? "answered" : ""} 
+      ${isHighlighted && !isAnswered ? "highlighted" : ""}`}
+    >
       <p>{content}</p>
       <footer>
         <div className="user-info">
@@ -27,5 +33,5 @@ export const Question = ({
         <div>{children}</div>
       </footer>
     </StyledQuestion>
-  )
-}
+  );
+};
