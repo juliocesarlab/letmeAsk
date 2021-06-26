@@ -5,30 +5,45 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { UseRoom } from "../../hooks/UseRoom";
 
-
 import { useTheme } from "../../hooks/useTheme";
 
 import { Button } from "../../components/Button/Button";
 import { RoomCode } from "../../components/RoomCode/RoomCode";
 import { Question } from "../../components/Questions/Question";
+import { NoExistQuestions } from "../../components/noExistQuestions/NoExistQuestions";
 
 import { database } from "../../services/firebase";
 
 import logoImg from "../../assets/logo.svg";
-import logoImgDark from '../../assets/logoDark.png'
+import logoImgDark from "../../assets/logoDark.png";
 import deleteImg from "../../assets/delete.svg";
 import checkImg from "../../assets/check.svg";
 import answerImg from "../../assets/answer.svg";
+import { useEffect } from "react";
+import { useState } from "react";
 
 type RoomParams = {
   id: string;
 };
 
 export const AdminRoom = () => {
-  const {theme, toggleTheme} = useTheme()
+  const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
-  
   const roomId = params.id;
+  const [haveQuestions, setHaveQuestions] = useState<boolean>(true);
+
+  useEffect(() => {
+    const questionsCheck = async () => {
+      const questionsRef = await database
+        .ref(`rooms/${roomId}/questions`)
+        .get();
+      const existQuestions = await questionsRef.val();
+      if (existQuestions === null) setHaveQuestions(false);
+    };
+
+    questionsCheck();
+  }, [roomId]);
+
   const history = useHistory();
 
   const { questions, title } = UseRoom(roomId);
@@ -48,7 +63,6 @@ export const AdminRoom = () => {
   };
 
   const handleHighlightQuestion = async (questionId: string) => {
-    
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted: true,
     });
@@ -62,16 +76,21 @@ export const AdminRoom = () => {
     }
   };
 
+  
+
   return (
-    <StyledRoomAdmin id="page-room" className={theme == 'dark' ? 'dark' : ''}>
+    <StyledRoomAdmin id="page-room" className={theme === "dark" ? "dark" : ""}>
       <header>
         <div className="content">
-          <img src={theme === 'dark' ? logoImgDark : logoImg} alt="Let me ask" />
+          <img
+            src={theme === "dark" ? logoImgDark : logoImg}
+            alt="Let me ask"
+          />
           <div id="change-theme-div">
             <RoomCode code={params.id} />
             <button onClick={toggleTheme} className="theme">
               {theme === "light" ? (
-                <RiLightbulbLine size={24} />
+                <RiLightbulbLine size={28} />
               ) : (
                 <RiLightbulbFill size={24} />
               )}
@@ -89,6 +108,7 @@ export const AdminRoom = () => {
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
 
+        {haveQuestions === false && <div id="noQuestions"><h1 >Ainda não fora feitas pergutas, chame seus amigos !</h1></div>}
         {questions.map((question) => {
           return (
             <Question
@@ -122,6 +142,8 @@ export const AdminRoom = () => {
           );
         })}
       </main>
+      
     </StyledRoomAdmin>
+    
   );
 };

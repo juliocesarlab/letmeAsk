@@ -2,9 +2,16 @@ import styled from "styled-components";
 
 export const StyledRoomAdmin = styled.div`
   
+  #noQuestions{
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &.dark {
-    height: 100vh;
     height: fit-content;
+    height: 100vh;
     background: #121212;
     transition: background-color 0.5s;
     
