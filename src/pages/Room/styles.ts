@@ -1,6 +1,66 @@
 import styled from "styled-components";
 
 export const StyledRoom = styled.div`
+  
+  &.dark {
+    height: 100vh;
+    background: #121212;
+    transition: background-color 0.5s;
+    
+    
+    header {
+      background: #272727;
+      border: none;
+    }
+
+    button {
+      color: #fff;
+      background: #272727;
+      border: 1px solid #121212;
+    }
+
+    main {
+      .room-title {
+        h1 {
+          color: #fefefe;
+        }
+        span {
+          color: #fefefe;
+          background: #737380;
+        }
+      }
+    }
+
+    form {
+      .form-footer {
+        .user-info {
+          span {
+            color: #fefefe;
+          }
+        }
+      }
+    }
+
+    .like-button {
+      background: transparent;
+      border: none;
+      color: #272727;
+
+      svg {
+        color: #272727;
+
+        path {
+          stroke: #272727;
+        }
+      }
+    }
+  }
+  
+
+  &{
+    transition: all .5s;
+  }
+
   header {
     padding: 24px;
     border-bottom: 1px solid #e2e2e2;
@@ -12,6 +72,16 @@ export const StyledRoom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    > #change-theme-div {
+      display: flex;
+      gap: 16px;
+
+      button.theme {
+        background: transparent;
+        border: 0;
+      }
+    }
 
     > img {
       max-height: 45px;
@@ -81,7 +151,7 @@ export const StyledRoom = styled.div`
         }
 
         > span {
-          font-size: 14px;
+          font-size: 22px;
           color: #737380;
           font-weight: 500;
 
@@ -97,7 +167,5 @@ export const StyledRoom = styled.div`
         }
       }
     }
-
-    
   }
 `;

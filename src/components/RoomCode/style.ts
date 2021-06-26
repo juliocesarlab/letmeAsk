@@ -2,6 +2,12 @@ import styled from "styled-components";
 
 export const StyledRoomCode = styled.button`
 
+&.dark{
+  > div {
+    background: transparent;
+  }
+}
+
 &{
   height: 40px;
   border-radius: 8px;

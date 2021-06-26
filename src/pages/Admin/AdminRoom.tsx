@@ -1,9 +1,12 @@
 import { StyledRoomAdmin } from "./styles";
+import { RiLightbulbLine, RiLightbulbFill } from "react-icons/ri";
 
 import { useHistory, useParams } from "react-router-dom";
 
 import { UseRoom } from "../../hooks/UseRoom";
-import { useState } from "react";
+
+
+import { useTheme } from "../../hooks/useTheme";
 
 import { Button } from "../../components/Button/Button";
 import { RoomCode } from "../../components/RoomCode/RoomCode";
@@ -21,8 +24,9 @@ type RoomParams = {
 };
 
 export const AdminRoom = () => {
+  const {theme, toggleTheme} = useTheme()
   const params = useParams<RoomParams>();
-  const [isHightlighted, setisHighlighted] = useState<boolean>(false)
+  
   const roomId = params.id;
   const history = useHistory();
 
@@ -62,8 +66,15 @@ export const AdminRoom = () => {
       <header>
         <div className="content">
           <img src={logoImg} alt="Let me ask" />
-          <div>
+          <div id="change-theme-div">
             <RoomCode code={params.id} />
+            <button onClick={toggleTheme} className="theme">
+              {theme === "light" ? (
+                <RiLightbulbLine size={24} />
+              ) : (
+                <RiLightbulbFill size={24} />
+              )}
+            </button>
             <Button isOutlined onClick={handleEndRoom}>
               Encerrar sala
             </Button>

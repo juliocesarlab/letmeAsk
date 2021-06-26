@@ -15,44 +15,41 @@ import { useState } from "react";
 
 export const Home = () => {
   const history = useHistory();
-  const [roomCode, setRoomCode] = useState('')
+  const [roomCode, setRoomCode] = useState("");
   const { user, signInWithGoogle } = useAuth();
 
-  const   handleCreateRoom = async () => {
+  const handleCreateRoom = async () => {
     if (!user) {
-        await signInWithGoogle()
+      await signInWithGoogle();
     }
 
     history.push("/rooms/new");
   };
 
-  const   handleJoinRoom = async (event: FormEvent) => {
-    event.preventDefault()
-    
-    if (roomCode.trim() === '') {
+  const handleJoinRoom = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (roomCode.trim() === "") {
       return;
     }
 
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
-    if (!roomRef.exists()){
-      alert("Esta sala não existe")
+    if (!roomRef.exists()) {
+      alert("Esta sala não existe");
       return;
     }
 
     if (roomRef.val().endedAt) {
-      alert('Esta sala foi fechada')
+      alert("Esta sala foi fechada");
       return;
     }
 
-    history.push(`/rooms/${roomCode}`)
-
-    
-    
+    history.push(`/rooms/${roomCode}`);
   };
 
   return (
-    <PageAuth >
+    <PageAuth>
       <aside>
         <img src={illustrationImg} alt="illustrationImg" />
         <strong>Crie salas de Q&amp;A ao vivo</strong>
@@ -71,11 +68,11 @@ export const Home = () => {
           <div className="separator">Ou entre em uma sala</div>
 
           <form onSubmit={handleJoinRoom}>
-            
-            <input type="text" 
-            placeholder="Digite o código da sala"
-            onChange={e => setRoomCode(e.target.value)}
-            value={roomCode}
+            <input
+              type="text"
+              placeholder="Digite o código da sala"
+              onChange={(e) => setRoomCode(e.target.value)}
+              value={roomCode}
             />
 
             <Button type="submit">Entrar na sala</Button>

@@ -16,12 +16,17 @@ export const StyledRoomAdmin = styled.div`
         max-height: 45px;
       }
 
-      > div {
+      > div#change-theme-div {
         display: flex;
         gap: 16px;
 
         button {
           height: 40px;
+        }
+
+        button.theme {
+          background: transparent;
+          border: 0            ;
         }
       }
     }

@@ -1,10 +1,13 @@
 import { StyledRoom } from "./styles";
+import { RiLightbulbLine, RiLightbulbFill } from "react-icons/ri";
 
 import { useParams } from "react-router-dom";
 
 import { FormEvent, useState } from "react";
 
 import { useAuth } from "../../hooks/useAuth";
+import { UseRoom } from "../../hooks/UseRoom";
+import { useTheme } from "../../hooks/useTheme";
 
 import { Button } from "../../components/Button/Button";
 import { RoomCode } from "../../components/RoomCode/RoomCode";
@@ -13,7 +16,8 @@ import { Question } from "../../components/Questions/Question";
 import { database } from "../../services/firebase";
 
 import logoImg from "../../assets/logo.svg";
-import { UseRoom } from "../../hooks/UseRoom";
+import LogoImgDark from "../../assets/logoDark.png"
+
 
 type RoomParams = {
   id: string;
@@ -22,20 +26,26 @@ type RoomParams = {
 export const Room = () => {
   const [newQuestion, setNewQuestion] = useState("");
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
   const roomId = params.id;
 
   const { questions, title } = UseRoom(roomId);
 
-  const handleLikeQuestion = async (questionId: string, likeId: string | undefined) => {
-    if (likeId){
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove()
+  const handleLikeQuestion = async (
+    questionId: string,
+    likeId: string | undefined
+  ) => {
+    if (likeId) {
+      await database
+        .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+        .remove();
     } else {
       await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
-        authorId: user?.id
-      })
+        authorId: user?.id,
+      });
     }
-  }
+  };
 
   const handleSendQuestion = async (e: FormEvent) => {
     e.preventDefault();
@@ -64,11 +74,21 @@ export const Room = () => {
   };
 
   return (
-    <StyledRoom id="page-room">
+    <StyledRoom id="page-room" className={theme === 'dark' ? "dark" : ''}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Let me ask" />
-          <RoomCode code={params.id} />
+          <img src={theme === 'dark' ? LogoImgDark : logoImg} alt="Let me ask" />
+
+          <div id="change-theme-div">
+            <RoomCode code={params.id} />
+            <button onClick={toggleTheme} className="theme">
+              {theme === "light" ? (
+                <RiLightbulbLine size={24} />
+              ) : (
+                <RiLightbulbFill size={24} />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -107,7 +127,7 @@ export const Room = () => {
               author={question.author}
             >
               <button
-                className={`like-button ${question.likeId ? 'liked' : ''}`}
+                className={`like-button ${question.likeId ? "liked" : ""}`}
                 type="button"
                 aria-label="Marcar como gostei"
                 onClick={() => handleLikeQuestion(question.id, question.likeId)}
