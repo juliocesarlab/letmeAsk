@@ -1,5 +1,6 @@
 import { StyledQuestion } from "./style";
 import { ReactNode } from "react";
+import { useTheme } from '../../hooks/useTheme'
 
 type QuestionProps = {
   content: string;
@@ -19,10 +20,15 @@ export const Question = ({
   isAnswered = false,
   isHighlighted = false,
 }: QuestionProps) => {
+  
+  const { theme } = useTheme()
+
   return (
     <StyledQuestion
-      className={`${isAnswered ? "answered" : ""} 
-      ${isHighlighted && !isAnswered ? "highlighted" : ""}`}
+      className=
+      {`${isAnswered ? "answered" : ""} 
+      ${isHighlighted && !isAnswered ? "highlighted" : ""} 
+      ${theme === 'dark' ? 'dark' : ''}`}
     >
       <p>{content}</p>
       <footer>

@@ -15,6 +15,7 @@ import { Question } from "../../components/Questions/Question";
 import { database } from "../../services/firebase";
 
 import logoImg from "../../assets/logo.svg";
+import logoImgDark from '../../assets/logoDark.png'
 import deleteImg from "../../assets/delete.svg";
 import checkImg from "../../assets/check.svg";
 import answerImg from "../../assets/answer.svg";
@@ -62,10 +63,10 @@ export const AdminRoom = () => {
   };
 
   return (
-    <StyledRoomAdmin id="page-room">
+    <StyledRoomAdmin id="page-room" className={theme == 'dark' ? 'dark' : ''}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Let me ask" />
+          <img src={theme === 'dark' ? logoImgDark : logoImg} alt="Let me ask" />
           <div id="change-theme-div">
             <RoomCode code={params.id} />
             <button onClick={toggleTheme} className="theme">
@@ -114,7 +115,7 @@ export const AdminRoom = () => {
                   type="button"
                   onClick={() => handleDeleteQuestion(question.id)}
                 >
-                  <img src={deleteImg} alt="exluir pergunta" />
+                  <img src={deleteImg} alt="excluir pergunta" />
                 </button>
               </div>
             </Question>

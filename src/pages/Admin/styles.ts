@@ -1,6 +1,51 @@
 import styled from "styled-components";
 
 export const StyledRoomAdmin = styled.div`
+  
+  &.dark {
+    height: 100vh;
+    height: fit-content;
+    background: #121212;
+    transition: background-color 0.5s;
+    
+    
+    header {
+      background: #272727;
+      border: none;
+    }
+
+    button {
+      color: #fff;
+      background: #272727;
+      border: 1px solid #121212;
+    }
+
+    main {
+      .room-title {
+        h1 {
+          color: #fefefe;
+        }
+        span {
+          color: #fefefe;
+          background: #737380;
+        }
+      }
+    }
+    .endRoomButtonDark{
+      border: none;
+      background: #737380;
+      color: white;
+    }
+    .buttons{
+      button {
+        background: transparent;
+        border: 0;
+      }
+    }
+
+    
+  }
+  
   header {
     padding: 24px;
     border-bottom: 1px solid #e2e2e2;

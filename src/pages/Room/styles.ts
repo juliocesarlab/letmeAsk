@@ -4,6 +4,7 @@ export const StyledRoom = styled.div`
   
   &.dark {
     height: 100vh;
+    height: fit-content;
     background: #121212;
     transition: background-color 0.5s;
     
