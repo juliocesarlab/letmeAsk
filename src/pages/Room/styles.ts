@@ -2,9 +2,15 @@ import styled from "styled-components";
 
 export const StyledRoom = styled.div`
   
-  &.dark {
-    height: 100vh;
+  &.themeBugFix{
     height: fit-content;
+  }
+  
+  height: 100vh;
+  
+  &.dark {
+    
+    
     background: #121212;
     transition: background-color 0.5s;
     

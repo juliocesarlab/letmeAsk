@@ -16,8 +16,8 @@ import { Question } from "../../components/Questions/Question";
 import { database } from "../../services/firebase";
 
 import logoImg from "../../assets/logo.svg";
-import LogoImgDark from "../../assets/logoDark.png"
-
+import LogoImgDark from "../../assets/logoDark.png";
+import { useEffect } from "react";
 
 type RoomParams = {
   id: string;
@@ -25,12 +25,27 @@ type RoomParams = {
 
 export const Room = () => {
   const [newQuestion, setNewQuestion] = useState("");
+  const [questionsLength, setQuestionsLength] = useState<Number>(0);
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
   const roomId = params.id;
+  const questionsRef = database.ref(`/rooms/${roomId}/questions`);
 
   const { questions, title } = UseRoom(roomId);
+
+  useEffect(() => {
+    questionsRef.on("value", (obj) => {
+      const responseVal = obj.val();
+      const result = Object.keys(responseVal).length;
+
+      setQuestionsLength(result);
+
+      return () => {
+        questionsRef.off("value");
+      };
+    });
+  }, [roomId, questionsRef]);
 
   const handleLikeQuestion = async (
     questionId: string,
@@ -74,10 +89,20 @@ export const Room = () => {
   };
 
   return (
-    <StyledRoom id="page-room" className={theme === 'dark' ? "dark" : ''}>
+    <StyledRoom
+      id="page-room"
+      className={`
+    ${theme === "dark" ? "dark" : ""} 
+    ${questionsLength >= 3 ? "themeBugFix" : ""}
+
+    `}
+    >
       <header>
         <div className="content">
-          <img src={theme === 'dark' ? LogoImgDark : logoImg} alt="Let me ask" />
+          <img
+            src={theme === "dark" ? LogoImgDark : logoImg}
+            alt="Let me ask"
+          />
 
           <div id="change-theme-div">
             <RoomCode code={params.id} />

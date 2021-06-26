@@ -10,7 +10,6 @@ import { useTheme } from "../../hooks/useTheme";
 import { Button } from "../../components/Button/Button";
 import { RoomCode } from "../../components/RoomCode/RoomCode";
 import { Question } from "../../components/Questions/Question";
-import { NoExistQuestions } from "../../components/noExistQuestions/NoExistQuestions";
 
 import { database } from "../../services/firebase";
 
@@ -31,6 +30,8 @@ export const AdminRoom = () => {
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const [haveQuestions, setHaveQuestions] = useState<boolean>(true);
+  const [questionsLength, setQuestionsLength] = useState<Number>(0);
+  const questionsRef = database.ref(`/rooms/${roomId}/questions`);
 
   useEffect(() => {
     const questionsCheck = async () => {
@@ -44,6 +45,18 @@ export const AdminRoom = () => {
     questionsCheck();
   }, [roomId]);
 
+  useEffect(() => {
+    questionsRef.on("value", (obj) => {
+      const responseVal = obj.val();
+      const result = Object.keys(responseVal).length;
+
+      setQuestionsLength(result);
+
+      return () => {
+        questionsRef.off("value");
+      };
+    });
+  }, [roomId, questionsRef]);
   const history = useHistory();
 
   const { questions, title } = UseRoom(roomId);
@@ -76,10 +89,15 @@ export const AdminRoom = () => {
     }
   };
 
-  
-
   return (
-    <StyledRoomAdmin id="page-room" className={theme === "dark" ? "dark" : ""}>
+    <StyledRoomAdmin
+      id="page-room"
+      className={`
+    ${theme === "dark" ? "dark" : ""} 
+    ${questionsLength >= 3 ? "themeBugFix" : ""}
+
+    `}
+    >
       <header>
         <div className="content">
           <img
@@ -108,7 +126,11 @@ export const AdminRoom = () => {
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
 
-        {haveQuestions === false && <div id="noQuestions"><h1 >Ainda não fora feitas pergutas, chame seus amigos !</h1></div>}
+        {haveQuestions === false && (
+          <div id="noQuestions">
+            <h1>Ainda não fora feitas pergutas, chame seus amigos !</h1>
+          </div>
+        )}
         {questions.map((question) => {
           return (
             <Question
@@ -142,8 +164,6 @@ export const AdminRoom = () => {
           );
         })}
       </main>
-      
     </StyledRoomAdmin>
-    
   );
 };
