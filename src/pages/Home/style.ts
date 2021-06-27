@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
 export const PageAuth = styled.div`
-  
-  
-  
   display: flex;
   align-items: stretch;
   height: 100vh;
 
   aside {
-    flex: 7;
-
+    flex: 1;
+    background-size: cover;
     background: #835afd;
     color: #fff;
 
@@ -39,7 +36,10 @@ export const PageAuth = styled.div`
   }
 
   main {
-    flex: 8;
+    flex: 1;
+
+    width: 100%;
+    max-width: 700px;
 
     padding: 0 32px;
 
@@ -145,6 +145,16 @@ export const PageAuth = styled.div`
         background: #a8a8b3;
         margin-left: 16px;
       }
+    }
+  }
+
+  @media (max-width: 800px) {
+    aside {
+      display: none;
+    }
+
+    main {
+      max-width: none;
     }
   }
 `;

@@ -144,4 +144,16 @@ export const RoomStyle = styled.div`
       }
     }
   }
+  @media (max-width: 800px){
+    
+    
+    aside{
+      display: none;
+    }
+
+    main{
+      max-width: none;
+      
+    }
+  }
 `;

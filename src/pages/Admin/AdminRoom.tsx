@@ -48,9 +48,10 @@ export const AdminRoom = () => {
   useEffect(() => {
     questionsRef.on("value", (obj) => {
       const responseVal = obj.val();
-      const result = Object.keys(responseVal).length;
-
-      setQuestionsLength(result);
+      if (responseVal) {
+        const result = Object.keys(responseVal).length;
+        setQuestionsLength(result);
+      }
 
       return () => {
         questionsRef.off("value");
@@ -128,7 +129,7 @@ export const AdminRoom = () => {
 
         {haveQuestions === false && (
           <div id="noQuestions">
-            <h1>Ainda não fora feitas pergutas, chame seus amigos !</h1>
+            <h1>Ainda não foram feitas perguntas, chame seus amigos!</h1>
           </div>
         )}
         {questions.map((question) => {

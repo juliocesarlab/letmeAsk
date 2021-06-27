@@ -175,4 +175,66 @@ export const StyledRoom = styled.div`
       }
     }
   }
+  @media (max-width: 800px) {
+    header {
+      .content {
+        max-width: 360px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        > img {
+          max-height: 40px;
+        }
+
+        > div#change-theme-div {
+          display: flex;
+          width: 222px;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+
+          button {
+            background: none;
+            height: 40px;
+            padding: 0 2px;
+            margin: 0;
+            width: 100px;
+            border: none;
+
+            > span {
+              display: none;
+            }
+          }
+
+          button.theme {
+            background: none;
+            position: relative;
+            right: 24px;
+            width: 18px;
+            border: 0;
+            
+          }
+        }
+      }
+    }
+    main{
+      .room-title{
+        padding-left: 16px;
+      }
+
+      #noQuestions{
+        padding-left: 16px;
+
+        h1{
+          font-size: 32px;
+        }
+      }
+      form{
+        padding: 16px;
+      }
+    }
+  }
 `;

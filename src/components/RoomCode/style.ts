@@ -41,4 +41,31 @@ export const StyledRoomCode = styled.button`
   }
 }
 
+@media (max-width: 800px){
+  &{
+    border-radius: 0px;
+
+    >span{
+      display: none;
+    }
+    
+
+    >div{
+      border-radius: 50%;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      margin-left: 4px;
+      z-index: 10;
+
+      >img{
+        width: 22px;
+        margin-left: -1.3px;
+      }
+    }
+  }
+}
+
 `

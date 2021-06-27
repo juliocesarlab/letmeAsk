@@ -34,13 +34,14 @@ export const Room = () => {
 
   const { questions, title } = UseRoom(roomId);
 
-  
   useEffect(() => {
     questionsRef.on("value", (obj) => {
       const responseVal = obj.val();
-      const result = Object.keys(responseVal).length;
 
-      setQuestionsLength(result);
+      if (responseVal) {
+        const result = Object.keys(responseVal).length;
+        setQuestionsLength(result);
+      }
 
       return () => {
         questionsRef.off("value");

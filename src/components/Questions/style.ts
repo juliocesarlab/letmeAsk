@@ -65,6 +65,7 @@ export const StyledQuestion = styled.div`
 
   p {
     color: #29292e;
+    word-wrap: break-word;
   }
 
   footer {
@@ -111,6 +112,16 @@ export const StyledQuestion = styled.div`
           stroke: #835afd;
         }
       }
+    }
+  }
+  @media (max-width: 800px) {
+    &{
+      margin: 0 24px;
+       >p{
+        position: relative ;
+        display: block;
+        word-wrap: break-word
+       }
     }
   }
 `;
