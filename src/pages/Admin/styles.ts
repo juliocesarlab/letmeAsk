@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
 export const StyledRoomAdmin = styled.div`
+  
+  
   &.themeBugFix{
-    height: fit-content;
+    height: 100vh;
+    overflow-y: scroll;
   }
   
+  height: 100vh;
+
   #noQuestions {
     height: 50vh;
     display: flex;

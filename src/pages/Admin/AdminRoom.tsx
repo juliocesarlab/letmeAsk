@@ -29,21 +29,10 @@ export const AdminRoom = () => {
   const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
   const roomId = params.id;
-  const [haveQuestions, setHaveQuestions] = useState<boolean>(true);
+  const [haveQuestions, setHaveQuestions] = useState<boolean>(false);
   const [questionsLength, setQuestionsLength] = useState<Number>(0);
+
   const questionsRef = database.ref(`/rooms/${roomId}/questions`);
-
-  useEffect(() => {
-    const questionsCheck = async () => {
-      const questionsRef = await database
-        .ref(`rooms/${roomId}/questions`)
-        .get();
-      const existQuestions = await questionsRef.val();
-      if (existQuestions === null) setHaveQuestions(false);
-    };
-
-    questionsCheck();
-  }, [roomId]);
 
   useEffect(() => {
     questionsRef.on("value", (obj) => {
@@ -51,6 +40,11 @@ export const AdminRoom = () => {
       if (responseVal) {
         const result = Object.keys(responseVal).length;
         setQuestionsLength(result);
+        if (result >= 1) {
+          setHaveQuestions(true);
+        } else {
+          setHaveQuestions(false);
+        }
       }
 
       return () => {
@@ -71,14 +65,21 @@ export const AdminRoom = () => {
   };
 
   const handleCheckQuestionAsAnswered = async (questionId: string) => {
+    const answeredDB = await database
+    .ref(`rooms/${roomId}/questions/${questionId}/isAnswered`)
+    .get();
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-      isAnswered: true,
+      isAnswered: !answeredDB.val(),
     });
   };
 
   const handleHighlightQuestion = async (questionId: string) => {
+    const highlightDB = await database
+      .ref(`rooms/${roomId}/questions/${questionId}/isHighlighted`)
+      .get();
+
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-      isHighlighted: true,
+      isHighlighted: !(await highlightDB.val()),
     });
   };
 
@@ -95,7 +96,7 @@ export const AdminRoom = () => {
       id="page-room"
       className={`
     ${theme === "dark" ? "dark" : ""} 
-    ${questionsLength >= 3 ? "themeBugFix" : ""}
+    ${questionsLength >= 5 ? "themeBugFix" : ""}
 
     `}
     >
@@ -150,13 +151,17 @@ export const AdminRoom = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleHighlightQuestion(question.id)}
+                  onClick={() => {
+                    handleHighlightQuestion(question.id);
+                  }}
                 >
                   <img src={answerImg} alt="responder pergunta" />
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleDeleteQuestion(question.id)}
+                  onClick={() => {
+                    handleDeleteQuestion(question.id);
+                  }}
                 >
                   <img src={deleteImg} alt="excluir pergunta" />
                 </button>

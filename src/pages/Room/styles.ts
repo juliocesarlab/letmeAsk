@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const StyledRoom = styled.div`
   
   &.themeBugFix{
-    height: fit-content;
+    height: 100vh;
+    overflow-y: scroll;
   }
   
   height: 100vh;
@@ -139,6 +140,8 @@ export const StyledRoom = styled.div`
         align-items: center;
         margin-top: 16px;
 
+        
+
         .user-info {
           display: flex;
           align-items: center;
@@ -153,7 +156,7 @@ export const StyledRoom = styled.div`
             margin-left: 8px;
             color: #29292e;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 16px;
           }
         }
 
@@ -167,7 +170,7 @@ export const StyledRoom = styled.div`
             border: 0;
             color: #835afd;
             text-decoration: underline;
-            font-size: 14px;
+            font-size: 22px;
             font-weight: 500;
             cursor: pointer;
           }

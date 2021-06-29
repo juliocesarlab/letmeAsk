@@ -1,7 +1,7 @@
 import { StyledRoom } from "./styles";
 import { RiLightbulbLine, RiLightbulbFill } from "react-icons/ri";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { FormEvent, useState } from "react";
 
@@ -26,7 +26,7 @@ type RoomParams = {
 export const Room = () => {
   const [newQuestion, setNewQuestion] = useState("");
   const [questionsLength, setQuestionsLength] = useState<Number>(0);
-  const { user } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
   const roomId = params.id;
@@ -139,7 +139,7 @@ export const Room = () => {
               </div>
             ) : (
               <span>
-                Para enviar uma pergunta, <button>faça login</button>
+                Para enviar uma pergunta, <button onClick={signInWithGoogle}>faça login</button>
               </span>
             )}
             <Button type="submit">Enviar pergunta</Button>
